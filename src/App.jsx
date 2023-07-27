@@ -5,6 +5,7 @@ import LoginUserPage from './pages/LoginUserPage';
 import RegisterUserPage from './pages/RegisterUserPage';
 import UserProfiePage from './pages/UserProfiePage';
 import MainLayout from './layouts/MainLayout';
+import "./App.css"
 
 function App() {
   return (
