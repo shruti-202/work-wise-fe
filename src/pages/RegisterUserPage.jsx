@@ -1,14 +1,13 @@
 import React from "react";
 import {useSnackbar} from "notistack";
+import {infoAlert} from "../utils/alert"
 
 function RegisterUserPage() {
-  
-const {enqueueSnackbar}=useSnackbar();
-
 const handleSubmit=(e)=>{
   e.preventDefault();
+  infoAlert('testing')
 
-enqueueSnackbar("This is a success message!");
+// enqueueSnackbar("This is a success message!");
 }
   return (
     <div className="register">

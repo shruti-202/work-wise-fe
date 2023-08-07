@@ -1,6 +1,7 @@
 import React from 'react'
 import "./Header.css"
 import Logo from "../../../assets/owl.png"
+import {Link} from "react-router-dom";
 
 function Header() {
   return (
@@ -15,8 +16,8 @@ function Header() {
           </div>
           <div className="header-right">
            <div className="header-login">
-            <p>Login</p>
-            <p>Register</p>
+            <Link to="/login">Login</Link>
+            <Link to="/register">Register</Link>
            </div>
           </div>
         </div>
