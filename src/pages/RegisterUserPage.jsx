@@ -1,5 +1,5 @@
 import React from "react";
-import { errorAlert } from "../utils/alert";
+import {successAlert, errorAlert } from "../utils/alert";
 import { useRef } from "react";
 
 function RegisterUserPage() {
@@ -9,7 +9,7 @@ function RegisterUserPage() {
   const username = useRef();
   const password = useRef();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const nameVal = name.current.value;
     const phoneVal = phone.current.value;
@@ -17,32 +17,26 @@ function RegisterUserPage() {
     const usernameVal = username.current.value;
     const passwordVal = password.current.value;
 
-    const emailFormat = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
-    const usernameFormat = /^[A-Za-z][A-Za-z0-9_]{1,29}$/;
-    const passwordFormat =/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{6,15}$/;
-
-    if (nameVal.length < 2 || nameVal.length > 50) {
-      errorAlert("Invalid Name");
-      return;
+    const response=await fetch(`${import.meta.env.VITE_API_URL}/api/v1/auth/register`,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
+      },
+      body:JSON.stringify({
+        name:nameVal,
+        phone:phoneVal,
+        email:emailVal,
+        username:usernameVal,
+        password:passwordVal
+      })
+    })
+    const data= await response.json();
+    if(response.ok){
+      successAlert("User Created");
+    }else{
+      errorAlert(data.error);
     }
-    if (phoneVal < 1000000000) {
-      errorAlert("Invalid Phone Number");
-      return;
-    }
-    if (!emailFormat.test(emailVal)) {
-      errorAlert("Invalid Email Address");
-      return;
-    }
-    if (!usernameFormat.test(usernameVal)) {
-      errorAlert("Invalid User-Name");
-      return;
-    }
-    if (!passwordFormat.test(passwordVal)) {
-      errorAlert(
-        "Password requires: 1 number, 1 uppercase, 1 lowercase, 1 special, 6+ characters"
-      );
-      return;
-    }
+    
   };
   return (
     <div className="register">
@@ -64,7 +58,12 @@ function RegisterUserPage() {
               ref={phone}
               required
             />
-            <input className="input-field" placeholder="Email" ref={email} required />
+            <input
+              className="input-field"
+              placeholder="Email"
+              ref={email}
+              required
+            />
             <input
               type="text"
               className="input-field"
