@@ -1,5 +1,5 @@
 import React from "react";
-import {successAlert, errorAlert } from "../utils/alert";
+import { successAlert, errorAlert } from "../utils/alert";
 import { useRef } from "react";
 
 function RegisterUserPage() {
@@ -17,26 +17,28 @@ function RegisterUserPage() {
     const usernameVal = username.current.value;
     const passwordVal = password.current.value;
 
-    const response=await fetch(`${import.meta.env.VITE_API_URL}/api/v1/auth/register`,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json",
-      },
-      body:JSON.stringify({
-        name:nameVal,
-        phone:phoneVal,
-        email:emailVal,
-        username:usernameVal,
-        password:passwordVal
-      })
-    })
-    const data= await response.json();
-    if(response.ok){
+    const response = await fetch(
+      `${import.meta.env.VITE_API_URL}/api/v1/auth/register`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: nameVal,
+          phone: phoneVal,
+          email: emailVal,
+          username: usernameVal,
+          password: passwordVal,
+        }),
+      }
+    );
+    const data = await response.json();
+    if (response.ok) {
       successAlert("User Created");
-    }else{
+    } else {
       errorAlert(data.error);
     }
-    
   };
   return (
     <div className="register">
